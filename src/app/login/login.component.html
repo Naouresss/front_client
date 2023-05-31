@@ -1,0 +1,136 @@
+<!-- HTML avec FormControl (Angular) -->
+<!--<form class="form" [formGroup]="loginForm" (ngSubmit)="login()">
+    <p class="form-title">Sign in to your account</p>
+    <div class="input-container">
+        <input placeholder="Enter email" type="email" formControlName="email" >
+        <span>
+            <svg stroke="currentColor" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M16 12a4 4 0 10-8 0 4 4 0 008 0zm0 0v1.5a2.5 2.5 0 005 0V12a9 9 0 10-9 9m4.5-1.206a8.959 8.959 0 01-4.5 1.207" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"></path>
+            </svg>
+        </span>
+    </div>
+    <div class="input-container">
+        <input placeholder="Enter password" type="password" formControlName="password">
+        <span>
+            <svg stroke="currentColor" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"></path>
+                <path d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"></path>
+            </svg>
+        </span>
+    </div>
+    <button class="submit" type="submit">
+        Sign in
+    </button>
+    <p class="signup-link">
+        No account?
+        <a href="/register">Sign up</a>
+    </p>
+</form>-->
+<section class="vh-100" style="background-color: #9A616D;">
+    <div class="container py-5 h-100">
+      <div class="row d-flex justify-content-center align-items-center h-100">
+        <div class="col col-xl-10">
+          <div class="card" style="border-radius: 1rem;">
+            <div class="row g-0">
+              <div class="col-md-6 col-lg-5 d-none d-md-block">
+                <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-login-form/img1.webp"
+                  alt="login form" class="img-fluid" style="border-radius: 1rem 0 0 1rem; height: 600px;" />
+              </div>
+              <div class="col-md-6 col-lg-7 d-flex align-items-center">
+                <div class="card-body p-4 p-lg-5 text-black">
+  
+                  <form (ngSubmit)="addUser()" method="POST">
+  
+                    <div class="d-flex align-items-center mb-3 pb-1">
+                      <i class="fas fa-cubes fa-2x me-3" style="color: #ff6219;"></i>
+                      <span class="h1 fw-bold mb-0"><img class="img"src="../../assets/logo.PNG"/></span>
+                    </div>
+  
+                    <h5 class="fw-normal mb-3 pb-3" style="letter-spacing: 1px;">Sign into your account</h5>
+  
+                    <div class="form-outline mb-4">
+                      <input id="email" name="email" type="email" autocomplete="email" required class="input-form"
+                      placeholder="Email" [(ngModel)]="form.email" #email="ngModel"
+                      pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$" class="form-control form-control-lg" />
+                     
+                      <div *ngIf="emailIsNotValid(email)" class="input-error">
+                        <p>Email is mandatory !!!!</p>
+                      </div>
+                    </div>
+  
+                    <div class="form-outline mb-4">
+                      <input id="password" name="password" type="password" autocomplete="password" required class="input-form"
+                      placeholder="Password" [(ngModel)]="form.password" #password="ngModel" minlength="1" class="form-control form-control-lg" />
+                     
+                      <div *ngIf="passwordIsNotValid(password)" class="input-error">
+                        <p>Password is mandatory !!!!</p>
+                      </div>
+                    </div>
+  
+                    <div class="pt-1 mb-4">
+                      <button class="btn btn-dark btn-lg btn-block submit-form" type="submit" [disabled]="isNotValide(email, password)">
+                        {{ buttonText }}
+                      </button>
+                      
+                    </div>
+                    <p class="mb-5 pb-lg-2" style="color: #393f81;">Don't have an account? <a href="/register"
+                        style="color: #393f81;">Register here</a></p>
+                    
+                  </form>
+                
+                </div>
+                <ng-container *ngIf="alertIsDisplayed" >
+                  <div class="relative z-10" aria-labelledby="modal-title" role="dialog" aria-modal="true">
+                    <div class="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity"></div>
+                
+                    <div class="fixed z-10 inset-0 overflow-y-auto">
+                      <div class="flex items-end sm:items-center justify-center min-h-full p-4 text-center sm:p-0">
+                        <div
+                          class="relative bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:max-w-lg sm:w-full">
+                          <div class="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
+                            <div class="sm:flex sm:items-start">
+                              <div
+                                class="mx-auto flex-shrink-0 flex items-center justify-center h-12 w-12 rounded-full bg-red-100 sm:mx-0 sm:h-10 sm:w-10">
+                                <!-- Heroicon name: outline/exclamation -->
+                                <svg class="h-6 w-6 text-red-600" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                                  stroke-width="2" stroke="currentColor" aria-hidden="true">
+                                  <path stroke-linecap="round" stroke-linejoin="round"
+                                    d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+                                </svg>
+                              </div>
+                              <div class="mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left">
+                                <h3 class="text-lg leading-6 font-medium text-gray-900" id="modal-title">
+                                  Alerte !
+                                </h3>
+                                <div class="mt-2">
+                                  <p class="text-sm text-gray-500">
+                                    {{alertText}}
+                                  </p>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                          <div class="bg-gray-50 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
+                            <button type="button"
+                              class="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-red-600 text-base font-medium text-white hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 sm:ml-3 sm:w-auto sm:text-sm"
+                              (click)="closeAlert()">
+                              Close
+                            </button>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </ng-container>  
+               
+              </div>
+             
+            </div>
+            
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </section>
+
